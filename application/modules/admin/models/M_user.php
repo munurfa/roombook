@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_user extends CI_Model
 {
 	function getUser() {
-        $this->datatables->select('ID,no_id,nama_user,nama,username, aktif' );
+        $this->datatables->select('ID,no_id,nama_user,nama,username, IF(aktif="0","Tidak","Ya") as aktif_nama' );
         $this->datatables->from('all_users_view');
 
         
@@ -57,6 +57,7 @@ class M_user extends CI_Model
             return $this->db->update('users', $datasaver, array('id' => $data['id']));
         }
     }
+    
     function delUser($id){
     	$this->db->where('id',$id);
     	$this->db->delete('users');

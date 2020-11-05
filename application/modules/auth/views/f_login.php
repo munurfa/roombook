@@ -1,7 +1,18 @@
+<div class="auto-form-wrapper">
 <?php if ($this->session->flashdata('msg')) {
                 ?>
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <?php echo $this->session->flashdata('msg'); ?>
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+</div>
+<?php } ?>
+
+<?php if ($this->session->flashdata('msg_success')) {
+                ?>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <?php echo $this->session->flashdata('msg_success'); ?>
      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -60,3 +71,9 @@
     ?>
   </div>
 <?php form_close();?>
+
+<div class="form-group">
+  <a href="<?=site_url('auth/register')?>" class="btn btn-success submit-btn btn-block">Register</a>
+</div>
+
+</div>

@@ -6,8 +6,11 @@
 	<title><?=$title;?></title>
 	<!-- plugins:css -->
 	<link rel="stylesheet" href="<?=base_url('assets/admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css');?>">
-	<link rel="stylesheet" href="<?=base_url('assets/admin/vendors/css/vendor.bundle.base.css');?>">
+  <link rel="stylesheet" href="<?=base_url('assets/admin/vendors/css/vendor.bundle.base.css');?>">
+  <?php if($this->uri->segment(2)!='home'):?>
 	<link rel="stylesheet" href="<?=base_url('assets/admin/vendors/css/vendor.bundle.addons.css');?>">
+  <?php endif?>
+  
 	<link rel="stylesheet" href="<?=base_url('assets/admin/datatables/datatables.min.css');?>">
 	<link rel="stylesheet" href="<?=base_url('assets/admin/datatables/buttons/css/buttons.dataTables.min.css');?>">
 	<!-- endinject -->
@@ -19,16 +22,27 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="<?=base_url('assets/admin/images/logo.png');?>" />
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+  <link href='<?=base_url('assets/admin/fullcalendar/main.css');?>' rel='stylesheet' />
 
 	<script src="<?=base_url('assets/admin/js/jquery.min.js');?>"></script>
 	
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 
-	<script src="<?=base_url('assets/admin/js/config.js');?>"></script>
-	<script src="<?=base_url('assets/admin/vendors/tinymce/tinymce.min.js');?>"></script>
 	<script>
+    var base_url = "<?=base_url()?>";
+  </script>
+  <script src="<?=base_url('assets/admin/vendors/tinymce/tinymce.min.js');?>"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+
+
+	<script>
+    
+
 		tinymce.init({ 
 			selector:'textareas',
 			plugins: 'code',

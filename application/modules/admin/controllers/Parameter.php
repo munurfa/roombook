@@ -16,105 +16,119 @@ class Parameter extends MX_Controller
         }
     }
     
-      function get_status_json() { //data data produk by JSON object
+    function get_event_json() { //data data produk by JSON object
         header('Content-Type: application/json');
-        echo $this->par->getStatus();
-      }
+        echo $this->par->getEvent();
+    }
 
-    function status(){
-        $data['title'] = 'Status of Shipments';
+    function event(){
+        $data['title'] = 'Event Khusus';
         // $data['content'] = 'daftar list users akses';
-        $page = 'admin/par/status/v_data';
+        $page = 'admin/par/event/v_data';
         echo modules::run('template/adminview', $data, $page);
     }
 
-    function status_edit($id=-1){
+    function event_edit($id=-1){
         if ($id==-1) {
-            $data['title'] = 'Add Status of Shipment';
+            $data['title'] = 'Tambah Event Khusus';
         }else{
-            $data['status'] = $this->par->getStatusById($id);
-            $data['title'] = 'Edit Status of Shipment';
+            $data['event'] = $this->par->getEventById($id);
+            $data['title'] = 'Ubah Event Khusus';
         }
-        $page = 'admin/par/status/v_form';
+
+        $page = 'admin/par/event/v_form';
         echo modules::run('template/adminview', $data, $page);
     }
 
-    function save_status() {
+    function save_event() {
 
         $post = $this->input->post();
+        
         $id = $this->input->post('id');
         $this->form_validation->set_rules('nama','Nama','trim|required');
+        $this->form_validation->set_rules('start','Tanggal Mulai','trim|required');
+        $this->form_validation->set_rules('end','Tanggal Selesai','trim|required');
+        
+        $special = $this->par->getRuangSpecial();
 
         if ($this->form_validation->run()==FALSE) {
-            $this->status_edit($id);
+            $this->event_edit($id);
+        }elseif(count($special)==0){
+            $this->session->set_flashdata('msg', 'Ruang Spesial belum ditentukan');
+            $this->event_edit($id);
         }else{
-            $last_id=$this->par->saveStatus($post);
+            $post['ruang'] = $special[0];
+            $last_id=$this->par->saveEvent($post);
             if ($id!=-1) {
                 $id=$id;
             } else {
                 $id = $last_id; 
             }
             
-            redirect('admin/parameter/status_edit/'.$id);
+            redirect('admin/parameter/event_edit/'.$id);
         }
     }
-    function destroy_status($id){
+    function destroy_event($id){
         if ($id!=-1) {
-            $this->par->delStatus($id);
+            $this->par->delEvent($id);
             $this->session->set_flashdata('msg', 'data telah dihapus');
-            redirect('admin/parameter/status');
+            redirect('admin/parameter/event');
         }
     }
 
 
 
-     function get_type_json() { //data data produk by JSON object
+     function get_ruang_json() { //data data produk by JSON object
         header('Content-Type: application/json');
-        echo $this->par->getType();
+        echo $this->par->getRuang();
       }
 
-    function type(){
-        $data['title'] = 'Service of Shipments';
+    function ruang(){
+        $data['title'] = 'Ruangan';
         // $data['content'] = 'daftar list users akses';
-        $page = 'admin/par/type/v_data';
+        $page = 'admin/par/ruang/v_data';
         echo modules::run('template/adminview', $data, $page);
     }
 
-    function type_edit($id=-1){
+    function ruang_edit($id=-1){
         if ($id==-1) {
-            $data['title'] = 'Add Service of Shipment';
+            $data['title'] = 'Tambah Ruang';
         }else{
-            $data['type'] = $this->par->getTypeById($id);
-            $data['title'] = 'Edit Service of Shipment';
+            $data['ruang'] = $this->par->getRuangById($id);
+            $data['title'] = 'Ubah Ruang';
         }
-        $page = 'admin/par/type/v_form';
+        $data['special'] = $this->par->getRuangSpecial();
+
+        $page = 'admin/par/ruang/v_form';
         echo modules::run('template/adminview', $data, $page);
     }
 
-    function save_type() {
+    function save_ruang() {
 
         $post = $this->input->post();
+        
         $id = $this->input->post('id');
         $this->form_validation->set_rules('nama','Nama','trim|required');
+        $this->form_validation->set_rules('kategori','Kategori','trim|required');
 
         if ($this->form_validation->run()==FALSE) {
-            $this->type_edit($id);
+            $this->ruang_edit($id);
         }else{
-            $last_id=$this->par->saveType($post);
+            $last_id=$this->par->saveRuang($post);
             if ($id!=-1) {
                 $id=$id;
             } else {
                 $id = $last_id; 
             }
             
-            redirect('admin/parameter/type_edit/'.$id);
+            redirect('admin/parameter/ruang_edit/'.$id);
         }
     }
-    function destroy_type($id){
+    function destroy_ruang($id){
         if ($id!=-1) {
-            $this->par->delType($id);
+            $this->par->delRuang($id);
             $this->session->set_flashdata('msg', 'data telah dihapus');
-            redirect('admin/parameter/type');
+            redirect('admin/parameter/ruang');
         }
     }
 }

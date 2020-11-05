@@ -6,7 +6,7 @@ class Home extends MX_Controller {
 	function __construct()
     {
         parent::__construct();
-        // $this->load->model('m_ship');
+        $this->load->model('M_book', 'book');
         //validasi jika user belum login
         if($this->session->userdata('masuk') != TRUE){
             $url=base_url('auth/login');
@@ -17,6 +17,7 @@ class Home extends MX_Controller {
     function index(){
         $data['title'] = 'Home';
         $data['content'] = 'daftar list users akses';
+        $data['jadwal'] = json_encode($this->book->getBookAll());
         $page = 'admin/home/v_show';
         echo modules::run('template/adminview', $data, $page);
     }

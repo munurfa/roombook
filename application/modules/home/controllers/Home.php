@@ -7,21 +7,18 @@ class Home extends MX_Controller {
     {
         parent::__construct();
         $this->load->model('m_home', 'home');
+        $this->load->model('admin/m_book', 'book');
         
     }
 
-    function index(){
-        $no_awb = $this->input->get('no_awb');
-
-        if ($no_awb != '') {
-            $data['oldValue'] = $no_awb;
-            $data['tracking'] =  $this->home->getTracking($no_awb);           
-        }
-        $data['slide'] =  $this->home->getSlide()->result();           
+    function index(){         
 
         $data['title'] = 'Home';
+        $data['jadwal'] = json_encode($this->book->getBookAll());
+        // var_dump($data['jadwal']);
+        // die();
         $page = 'home/v_show';
-        echo modules::run('template/frontview', $data, $page);
+        echo modules::run('template/authview', $data, $page);
     }
 
     function get_tracking(){

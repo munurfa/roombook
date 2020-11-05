@@ -27,7 +27,7 @@
                             Username
                         </th>
                         <th>
-                            Level
+                            Role
                         </th>
                         <th>
                             Aktif
@@ -91,7 +91,7 @@ function fetch_data(uri = "admin/users/user_json") {
                         {"data": "nama_user"},
                         {"data": "username"},
                         {"data": "nama"},
-                        {"data": "aktif"},
+                        {"data": "aktif_nama"},
                         {"data": "view"},
 
                     ],

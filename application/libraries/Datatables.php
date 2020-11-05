@@ -29,6 +29,7 @@
     private $where          = array();
     private $or_where       = array();
     private $where_in       = array();
+    private $where_not_in       = array();
     private $like           = array();
     private $or_like        = array();
     private $filter         = array();
@@ -143,10 +144,10 @@
       return $this;
     }
 
-    public function where_not_in($key_condition, $val = NULL, $backtick_protect = TRUE)
+    public function where_not_in($key_condition, $val = NULL)
     {
-      $this->where[] = array($key_condition, $val, $backtick_protect);
-      $this->ci->db->where_not_in($key_condition, $val, $backtick_protect);
+      $this->where_not_in[] = array($key_condition, $val);
+      $this->ci->db->where_not_in($key_condition, $val);
       return $this;
     }
 
@@ -441,6 +442,9 @@
         
       foreach($this->where_in as $val)
         $this->ci->db->where_in($val[0], $val[1]);
+
+      foreach($this->where_not_in as $val)
+        $this->ci->db->where_not_in($val[0], $val[1]);
 
       foreach($this->group_by as $val)
         $this->ci->db->group_by($val);

@@ -38,74 +38,98 @@ class M_par extends CI_Model
         $this->db->delete('level_users');
     }
 
+	function getEvent() {
+        $ruang = $this->getRuangSpecial();
+        $this->datatables->select('ID,nama,CONCAT(DATE_FORMAT(start_time, "%d-%m-%Y %H:%i")," s/d ", DATE_FORMAT(end_time, "%d-%m-%Y %H:%i")) as tanggal,deskripsi');
+        $this->datatables->from('booking');
+        $this->datatables->where_in('id_ruang', $ruang);
 
+        $this->datatables->add_column('view', '<a href="event_edit/$1" class="btn btn-warning btn-xs">Ubah</a>', 'ID');
 
-	function getStatus() {
-        $this->datatables->select('ID,nama,deskripsi');
-        $this->datatables->from('par_status');
-        $this->datatables->add_column('view', '<a href="status_edit/$1" class="btn btn-warning btn-xs">edit</a>', 'ID');
         
         return $this->datatables->generate();
 	}
 
-	function getStatusById($id)
+	function getEventById($id)
 	{
-		return $this->db->get_where('par_status', array('id' => $id))->row();
+		return $this->db->get_where('booking', array('id' => $id))->row();
 	}
 
-	function saveStatus($data) {
+	function saveEvent($data) {
 
         if (!is_array($data) || !count($data)) {
             return false;
         }
+
         $datasaver['nama'] = $data['nama'];
+        $datasaver['id_user'] = $this->session->userdata('ses_lumba_lumba');
+        $datasaver['id_ruang'] = $data['ruang'];
+        $datasaver['start_time'] = $data['start'];
+        $datasaver['end_time'] = $data['end'];
         $datasaver['deskripsi'] = $data['deskripsi'];
         if ($data['id'] == -1) {
-            $this->db->insert('par_status', $datasaver);
+            $this->db->insert('booking', $datasaver);
             return $this->db->insert_id();
         } else {
-            return $this->db->update('par_status', $datasaver, array('id' => $data['id']));
+            return $this->db->update('booking', $datasaver, array('id' => $data['id']));
         }
     }
 
-    function delStatus($id)
+    function delEvent($id)
     {
     	$this->db->where('id',$id);
-    	$this->db->delete('par_status');
+    	$this->db->delete('booking');
     }
 
-    function getType() {
-        $this->datatables->select('ID,nama,deskripsi');
-        $this->datatables->from('par_type');
-        $this->datatables->add_column('view', '<a href="type_edit/$1" class="btn btn-warning btn-xs">edit</a>', 'ID');
+    function getRuang() {
+        $this->datatables->select('ID,nama,CONCAT(IF(kategori="0","Biasa","Khusus"), "(", IF(is_special="0","Tidak","Ya"), ")") as kategori_nama,deskripsi');
+        $this->datatables->from('par_ruang');
+        $this->datatables->add_column('view', '<a href="ruang_edit/$1" class="btn btn-warning btn-xs">Ubah</a>', 'ID');
         
         return $this->datatables->generate();
     }
 
-    function getTypeById($id)
+    function getRuangById($id)
     {
-        return $this->db->get_where('par_type', array('id' => $id))->row();
+        return $this->db->get_where('par_ruang', array('id' => $id))->row();
     }
 
-    function saveType($data) {
+    function getRuangSpecial()
+    {
+        $dt = $this->db->get_where('par_ruang', array('is_special' => 1))->result();
+        $data = [];
+        foreach ($dt as $v) {
+            $data[] = $v->id;
+        }
+
+        return $data;
+    }
+
+    function saveRuang($data) {
 
         if (!is_array($data) || !count($data)) {
             return false;
         }
         $datasaver['nama'] = $data['nama'];
+        $datasaver['kategori'] = $data['kategori'];
+        if (isset($data['special'])) {
+            $datasaver['is_special'] = 1;
+        }else{
+            $datasaver['is_special'] = 0;
+        }
         $datasaver['deskripsi'] = $data['deskripsi'];
         if ($data['id'] == -1) {
-            $this->db->insert('par_type', $datasaver);
+            $this->db->insert('par_ruang', $datasaver);
             return $this->db->insert_id();
         } else {
-            return $this->db->update('par_type', $datasaver, array('id' => $data['id']));
+            return $this->db->update('par_ruang', $datasaver, array('id' => $data['id']));
         }
     }
 
-    function delType($id)
+    function delRuang($id)
     {
         $this->db->where('id',$id);
-        $this->db->delete('par_type');
+        $this->db->delete('par_ruang');
     }
 }
 ?>

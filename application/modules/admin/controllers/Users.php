@@ -83,6 +83,7 @@ class Users extends MX_Controller
             
         }else{
             $this->form_validation->set_rules('username','Username','trim|required|is_unique[users.username]');
+            $this->form_validation->set_rules('passwd','Password','trim|required');
         }
 
 
@@ -90,7 +91,6 @@ class Users extends MX_Controller
         $this->form_validation->set_rules('no_id','NIP','trim|required');
         $this->form_validation->set_rules('level_id','Level','trim|required');
         
-        $this->form_validation->set_rules('passwd','Password','trim|required');
 
         if ($this->form_validation->run()==FALSE) {
             $this->create($id);
@@ -106,6 +106,7 @@ class Users extends MX_Controller
             redirect('admin/users/create/'.$id);
         }
     }
+    
     function destroy($id){
         if ($id!=-1) {
             $this->user->delUser($id);

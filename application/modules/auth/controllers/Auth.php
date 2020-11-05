@@ -24,6 +24,19 @@ class Auth extends MX_Controller
 		
 	}
 
+	
+	function register()
+	{
+		if($this->session->userdata('masuk') != null){
+            redirect('admin/home');
+        }else{
+        	$data['title'] = 'register';
+			$page = 'auth/f_register';
+			echo modules::run('template/authview', $data, $page);
+        }
+		
+	}
+
 	function authLogin(){
         $username=htmlspecialchars($this->input->post('username',TRUE),ENT_QUOTES);
         $password=htmlspecialchars($this->input->post('password',TRUE),ENT_QUOTES);
@@ -42,6 +55,28 @@ class Auth extends MX_Controller
         	$this->session->set_flashdata('msg', 'Kombinasi Username & Password Salah');
             redirect('auth/login');
         }
+	}
+	
+	function save_user() {
+
+        $post = $this->input->post();
+       
+		$this->form_validation->set_rules('username','Username','trim|required|is_unique[users.username]');
+		$this->form_validation->set_rules('email','Email','trim|required|is_unique[users.email]');
+		$this->form_validation->set_rules('passwd','Password','trim|required');
+      
+        $this->form_validation->set_rules('nama','Nama Lengkap','trim|required');
+        $this->form_validation->set_rules('no_id','NIP','trim|required');
+        $this->form_validation->set_rules('level_id','Level','trim|required');
+
+        if ($this->form_validation->run()==FALSE) {
+            $this->register();
+        }else{
+            $post['password'] = md5($this->input->post('passwd'));
+            $this->m_auth->saveUser($post);
+			$this->session->set_flashdata('msg_success', 'Register Berhasil Silahkan Login');
+            redirect('auth/login');
+        }
     }
 
 	function logout()
@@ -50,6 +85,7 @@ class Auth extends MX_Controller
 			$this->session->unset_userdata('ses_id');
 			$this->session->unset_userdata('ses_nama');
 			$this->session->unset_userdata('ses_role');
+			$this->session->unset_userdata('ses_lumba_lumba');
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('msg', 'Kombinasi Username & Password Salah');
             redirect('auth/login');

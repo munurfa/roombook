@@ -2,7 +2,7 @@
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
 	<div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
 		<a class="navbar-brand brand-logo" href="#" style="font-size: 16px;color: cornflowerblue;font-weight: bold">
-			PT. SHANE GUNA PERMATA
+			TELKOM INDONESIA
 		</a>
 		<a class="navbar-brand brand-logo-mini" href="#">
 			<img src="<?=base_url('assets/admin/images/logo.png');?>" alt="logo" />
@@ -138,7 +138,7 @@
 			</li> -->
 			<li class="nav-item dropdown d-none d-xl-inline-block">
 				<a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-					<span class="profile-text">Hello, <?=$this->session->userdata('ses_nama');?> !</span>
+					<span class="profile-text">Hallo, <?=$this->session->userdata('ses_nama');?> !</span>
 					<img class="img-xs rounded-circle" src="<?=base_url('assets/admin/images/faces/face1.jpg');?>" alt="Profile image">
 				</a>
 				<div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
@@ -188,7 +188,7 @@
 						</div>
 					</div>
 				</div>
-				<a href="<?=site_url('admin/shipment/create/-1')?>" class="btn btn-success btn-block">New Shipments
+				<a href="<?=site_url('admin/booking/create/-1')?>" class="btn btn-success btn-block">Pinjam Ruang
 				<i class="mdi mdi-plus"></i>
 				</a>
 			</div>
@@ -200,28 +200,26 @@
 			</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="<?=site_url('admin/shipment')?>">
+			<a class="nav-link" href="<?=site_url('admin/booking')?>">
 				<i class="menu-icon mdi mdi-backup-restore"></i>
-				<span class="menu-title">Shipments</span>
+				<span class="menu-title">Peminjaman Ruang</span>
 			</a>
 		</li>
 		<?php if (($this->session->userdata('ses_role')=="superuserdo") || ($this->session->userdata('ses_role')=="admin")): ?>
 		<li class="nav-item">
 			<a class="nav-link" data-toggle="collapse" href="#office" aria-expanded="false" aria-controls="ui-basic">
 				<i class="menu-icon mdi mdi-content-copy"></i>
-				<span class="menu-title">Office</span>
+				<span class="menu-title">Pengguna</span>
 				<i class="menu-arrow"></i>
 			</a>
 			<div class="collapse" id="office">
 				<ul class="nav flex-column sub-menu">
+					
 					<li class="nav-item">
-						<a class="nav-link" href="<?=site_url('admin/users/create/-1')?>">Add New Office</a>
+						<a class="nav-link" href="<?=site_url('admin/users')?>">Data Pengguna</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?=site_url('admin/users')?>">Data Office</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="<?=site_url('admin/level')?>">Bagian/Unit/Level</a>
+						<a class="nav-link" href="<?=site_url('admin/level')?>">Role</a>
 					</li>
 				</ul>
 			</div>
@@ -235,32 +233,17 @@
 			<div class="collapse" id="par">
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item">
-						<a class="nav-link" href="<?=site_url('admin/parameter/type')?>">Service of Shipments</a>
+						<a class="nav-link" href="<?=site_url('admin/parameter/ruang')?>">Ruangan</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?=site_url('admin/parameter/status')?>">Status of Shipments</a>
+						<a class="nav-link" href="<?=site_url('admin/parameter/event')?>">Event Khusus</a>
 					</li>
 				</ul>
 			</div>
 		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="<?=site_url('admin/slide')?>">
-				<i class="menu-icon mdi mdi-backup-restore"></i>
-				<span class="menu-title">Slide</span>
-			</a>
-		</li>
-		<?php endif ?>
-		<?php if ($this->session->userdata('ses_role')=="superuserdo"): ?>
-			
 		
-		<li class="nav-item">
-			<a class="nav-link" href="<?=site_url('admin/pages')?>">
-				<i class="menu-icon mdi mdi-backup-restore"></i>
-				<span class="menu-title">Pages</span>
-			</a>
-		</li>
-
 		<?php endif ?>
+		
 		<li class="nav-item">
 			<a class="nav-link" href="<?=site_url('admin/users/ubah_pass')?>">
 				<i class="menu-icon mdi mdi-backup-restore"></i>

@@ -35,13 +35,13 @@
 
 
                <div class="form-group">
-              <label><b>Unit/Bagian/Level</b></label>
+              <label><b>Role</b></label>
               <div class="row">
                 <div class="col-sm-6">
                   <?php $levelId = (isset($user->level_id)) ? $user->level_id : set_value('level_id') ;
                   ?>
                   <select name="level_id" id="level" class="form-control">
-                    <option value="">Pilih Unit/Bagian/Level</option>
+                    <option value="">Pilih Role</option>
                     <?php
                     foreach($level as $data){
                     $levelSelect = ($data->id == $levelId) ? 'selected' : '' ;?>
