@@ -233,11 +233,15 @@
 			<div class="collapse" id="par">
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item">
+						<a class="nav-link" href="<?=site_url('admin/parameter/event')?>">Event Khusus</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href="<?=site_url('admin/parameter/ruang')?>">Ruangan</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?=site_url('admin/parameter/event')?>">Event Khusus</a>
+						<a class="nav-link" href="<?=site_url('admin/parameter/fasilitas')?>">Fasilitas</a>
 					</li>
+					
 				</ul>
 			</div>
 		</li>

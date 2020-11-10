@@ -80,6 +80,27 @@ class M_book extends CI_Model
         }
 
         return $data;
+	}
+	
+	function fasilitasRuang($id_ruang)
+    {
+        $this->db->select('id_fasilitas, nama');
+        $this->db->where('id_ruang', $id_ruang);
+        $this->db->from('fasilitas_ruang');
+        $this->db->join('par_fasilitas', 'par_fasilitas.id=fasilitas_ruang.id_fasilitas', 'right');
+        $dt = $this->db->get();
+
+        return $dt->result();
+    }
+
+    function getFasilitasRuangNama($id_ruang) {
+        $dt = $this->fasilitasRuang($id_ruang);
+        
+        $data = [];
+        foreach ($dt as $v) {
+            $data[] = $v->nama;
+        }
+        return $data;
     }
 
 	function getBook($awal='',$akhir='') {

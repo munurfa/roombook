@@ -38,7 +38,7 @@
                  
                   </select>
               </div>
-              <?php if (count($special)==0 || in_array($ruang->id, $special)):?>
+              <?php if (count($special)==0 || in_array($id, $special)):?>
               
               
               <div class="form-group">
@@ -52,6 +52,33 @@
               </div>
 
               <?php endif ?>
+
+              <div class="form-group">
+                <label for=""><b>Fasilitas</b></label>
+            
+              <?php 
+              $fasili = (is_array(set_value('fasilitas[]')))?set_value('fasilitas[]'): [];?>
+               <?php foreach($fasilitas as $fas):?>
+                <div class="form-check">
+                  <label class="form-check-label">
+                 
+
+                   
+
+                    <?php 
+                    if ($id=='-1') {
+                      $fasil = (in_array($fas->id, $fasili)) ? 'checked' : '';
+                    }else{
+                      $fasil = (in_array($fas->id, $fasilitasRuang)) ? 'checked' : '' ; 
+
+                    }
+                    ?>
+                    <input type="checkbox" class="form-check-input" name="fasilitas[]" <?=$fasil?> value="<?=$fas->id?>"> <?=$fas->nama?> <i class="input-helper" ></i>
+                  
+                  </label>
+                </div>
+                <?php endforeach?>
+              </div>
 
               <div class="form-group">
                 <?php $deskripsi = (isset($ruang->deskripsi)) ? $ruang->deskripsi : set_value('deskripsi') ; ?>

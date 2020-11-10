@@ -10,8 +10,8 @@
 <div class="card">
   <div class="card-body">
     <h4 class="card-title">
-        Data Ruangan &nbsp &nbsp
-        <a href="<?=site_url('admin/parameter/ruang_edit/-1')?>" class="btn btn-success">Tambah</a>
+        Data Fasilitas &nbsp &nbsp
+        <a href="<?=site_url('admin/parameter/fasilitas_edit/-1')?>" class="btn btn-success">Tambah</a>
     </h4>
     <hr>
     <div class="table-responsive">
@@ -20,13 +20,10 @@
           <tr>
             <th width="80px">No</th>
             <th>
-              Name
+              Nama
             </th>
             <th>
-              Kategori<br>(Apakah Spesial)
-            </th>
-            <th>
-              Fasilitas
+              Apakah Aktif ?
             </th>
             <th>
               Description
@@ -75,15 +72,14 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": base_url+"admin/parameter/get_ruang_json", "type": "POST"},
+                    ajax: {"url": base_url+"admin/parameter/get_fasilitas_json", "type": "POST"},
                     columns: [
                         {
                             "data": "ID",
                             "orderable": false
                         },
                         {"data": "nama"},
-                        {"data": "kategori_nama"},
-                        {"data": "fasilitas"},
+                        {"data": "aktif_nama"},
                         {"data": "deskripsi"},
                         {"data": "view"}
                     ],

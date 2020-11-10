@@ -47,6 +47,11 @@ class Booking extends MX_Controller
         echo $this->book->getBook();
     }
 
+    function fasilitas_json($id) { //data data produk by JSON object
+        header('Content-Type: application/json');
+        echo json_encode($this->book->getFasilitasRuangNama($id));
+    }
+
     function book_json_filter( $awal , $akhir) { //data data produk by JSON object
         header('Content-Type: application/json');
         echo $this->book->getBook($awal, $akhir);

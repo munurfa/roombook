@@ -35,7 +35,7 @@
               <div class="col-sm-8">
               <?php $ruangId = (isset($book->id_ruang)) ? $book->id_ruang : set_value('id_ruang') ; ?>
              
-              <select name="id_ruang" class="form-control">
+              <select name="id_ruang" id="id_ruang" class="form-control">
                 <option value="">-- Pilih Ruang --</option>
                 <?php if ($ruang != null) {?>
                   <?php foreach ($ruang as $v) {?>
@@ -138,8 +138,47 @@
       </div>
     </div>
   </div>
+  <div class="col-md-5 d-none align-items-stretch grid-margin" id="fasilitas">
+    <div class="row flex-grow">
 
+      <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title" id="title_fasilitas"></h4>
+            <h3>Fasilitas</h3>
+            <ol id="list_fasilitas"></ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
+
+<script>
+  $('#id_ruang').on('change', function(){
+    var id = $(this).val();
+    var nama = $(this).find("option:selected").text();
+    var list = '';
+   if (id!='') {
+     $.ajax({
+       method: "GET",
+       url: base_url+"admin/booking/fasilitas_json/"+id
+     })
+     .done(function( data ) {
+       $('#fasilitas').removeClass('d-none').addClass('d-flex');
+       Object.keys(data).forEach(function(key) {
+          list += '<li>'+data[key]+'</li>';
+
+        });
+        $('#title_fasilitas').text(nama);
+        $('#list_fasilitas').html(list);
+     });     
+   }else{
+    $('#fasilitas').removeClass('d-flex').addClass('d-none');
+
+   }
+  });
+</script>
 <?php echo form_close()?>
 

@@ -68,6 +68,7 @@ class Parameter extends MX_Controller
             redirect('admin/parameter/event_edit/'.$id);
         }
     }
+
     function destroy_event($id){
         if ($id!=-1) {
             $this->par->delEvent($id);
@@ -76,12 +77,10 @@ class Parameter extends MX_Controller
         }
     }
 
-
-
-     function get_ruang_json() { //data data produk by JSON object
+    function get_ruang_json() { //data data produk by JSON object
         header('Content-Type: application/json');
         echo $this->par->getRuang();
-      }
+    }
 
     function ruang(){
         $data['title'] = 'Ruangan';
@@ -96,8 +95,10 @@ class Parameter extends MX_Controller
         }else{
             $data['ruang'] = $this->par->getRuangById($id);
             $data['title'] = 'Ubah Ruang';
+            $data['fasilitasRuang'] = $this->par->getFasilitasRuang($id);
         }
         $data['special'] = $this->par->getRuangSpecial();
+        $data['fasilitas'] = $this->par->getFasilitasList();
 
         $page = 'admin/par/ruang/v_form';
         echo modules::run('template/adminview', $data, $page);
@@ -124,11 +125,66 @@ class Parameter extends MX_Controller
             redirect('admin/parameter/ruang_edit/'.$id);
         }
     }
+
     function destroy_ruang($id){
         if ($id!=-1) {
             $this->par->delRuang($id);
             $this->session->set_flashdata('msg', 'data telah dihapus');
             redirect('admin/parameter/ruang');
+        }
+    }
+
+    function get_fasilitas_json() { //data data produk by JSON object
+        header('Content-Type: application/json');
+        echo $this->par->getFasilitas();
+    }
+
+    function fasilitas(){
+        $data['title'] = 'Fasilitas';
+        // $data['content'] = 'daftar list users akses';
+        $page = 'admin/par/fasilitas/v_data';
+        echo modules::run('template/adminview', $data, $page);
+    }
+
+    function fasilitas_edit($id=-1){
+        if ($id==-1) {
+            $data['title'] = 'Tambah Fasilitas';
+        }else{
+            $data['fasilitas'] = $this->par->getFasilitasById($id);
+            $data['title'] = 'Ubah Fasilitas';
+        }
+
+        $page = 'admin/par/fasilitas/v_form';
+        echo modules::run('template/adminview', $data, $page);
+    }
+
+    function save_fasilitas() {
+
+        $post = $this->input->post();
+        
+        $id = $this->input->post('id');
+        $this->form_validation->set_rules('nama','Nama','trim|required');
+      
+
+        if ($this->form_validation->run()==FALSE) {
+            $this->fasilitas_edit($id);
+        }else{
+            $last_id=$this->par->saveFasilitas($post);
+            if ($id!=-1) {
+                $id=$id;
+            } else {
+                $id = $last_id; 
+            }
+            
+            redirect('admin/parameter/fasilitas_edit/'.$id);
+        }
+    }
+
+    function destroy_fasilitas($id){
+        if ($id!=-1) {
+            $this->par->delFasilitas($id);
+            $this->session->set_flashdata('msg', 'data telah dihapus');
+            redirect('admin/parameter/fasilitas');
         }
     }
 }
