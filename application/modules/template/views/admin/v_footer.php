@@ -23,6 +23,7 @@
 	<!-- inject:js -->
 	<script src="<?=base_url('assets/admin/js/off-canvas.js');?>"></script>
 	<script src="<?=base_url('assets/admin/js/misc.js');?>"></script>
+	<script src="<?=base_url('assets/admin/js/chart.js');?>"></script>
 	<!-- endinject -->
 	<!-- Custom js for this page-->
 	<script src="<?=base_url('assets/admin/js/dashboard.js');?>"></script>
@@ -30,6 +31,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	<script src='<?=base_url('assets/admin/fullcalendar/main.js');?>'></script>
 	<script src='<?=base_url('assets/admin/fullcalendar/locales-all.js');?>'></script>
+	
 	<!-- End custom js for this page-->
 	<script>
 		$(".datepicker").flatpickr({
@@ -73,6 +75,50 @@
 
 		 });
 		 <?php endif?>
+
+		 <?php if (($this->session->userdata('ses_role')=="superuserdo") || ($this->session->userdata('ses_role')=="admin")): ?>
+
+			var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+	type: 'bar',
+    data: {
+        labels: [<?=implode(",", $ruang['nama'])?>],
+        datasets: [{
+            label: '# Total Peminjaman Ruang',
+            data: [<?=implode(",", $ruang['jml'])?>],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+	maintainAspectRatio:false,
+
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+		<?php endif?>
 	</script>
 </body>
 </html>

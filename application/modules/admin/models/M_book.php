@@ -81,6 +81,24 @@ class M_book extends CI_Model
 
         return $data;
 	}
+
+	function dataChart()
+    {
+        $this->db->select('par_ruang.nama as nama_ruang, count(booking.id) as jml');
+        $this->db->from('par_ruang');
+		$this->db->join('booking', 'booking.id_ruang=par_ruang.id', 'left');
+        $this->db->group_by('par_ruang.id');
+        $this->db->order_by('jml', 'desc');
+		
+		$dt = $this->db->get();
+		$data = [];
+		foreach ($dt->result() as $v) {
+			$data['nama'][] = '"'.$v->nama_ruang.'"';
+			$data['jml'][] = $v->jml;
+		}
+
+        return $data;
+    }
 	
 	function fasilitasRuang($id_ruang)
     {

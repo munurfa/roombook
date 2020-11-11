@@ -18,6 +18,9 @@ class Home extends MX_Controller {
         $data['title'] = 'Home';
         $data['content'] = 'daftar list users akses';
         $data['jadwal'] = json_encode($this->book->getBookAll());
+        if (($this->session->userdata('ses_role')=="superuserdo") || ($this->session->userdata('ses_role')=="admin")) {
+            $data['ruang'] = $this->book->dataChart();
+        }
         $page = 'admin/home/v_show';
         echo modules::run('template/adminview', $data, $page);
     }

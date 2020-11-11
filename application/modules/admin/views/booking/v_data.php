@@ -10,7 +10,7 @@
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">
-        Data <?=$title?> &nbsp &nbsp<a href="<?=site_url('admin/booking/create/-1')?>" class="btn btn-success">Tambah</a>&nbsp &nbsp<a href="<?=site_url('admin/booking/cetak')?>" class="btn btn-danger">Print</a>
+        Data <?=$title?> &nbsp &nbsp<a href="<?=site_url('admin/booking/create/-1')?>" class="btn btn-success">Tambah</a>&nbsp &nbsp<a href="<?=site_url('admin/booking/cetak')?>" class="btn btn-danger d-none">Print</a>
         </h4>
         <div class="form-inline">
             <label>Cari berdasarkan Tanggal</label>&nbsp &nbsp
